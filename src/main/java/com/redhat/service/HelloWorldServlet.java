@@ -23,7 +23,7 @@ import org.hibernate.cfg.Configuration;
 public class HelloWorldServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
   final org.apache.logging.log4j.Logger logger = LogManager.getLogger(HelloWorldServlet.class);
-  
+
   // Create our mssql database connection
   private String host = "mssql";
   private String port = "1433";
@@ -36,13 +36,17 @@ public class HelloWorldServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     System.out.println("doGet fired");
     logger.info("doGet fired");
-    
+
     // Configure Hibernate logging to only log SEVERE errors
     // @SuppressWarnings("unused")
-    // org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger("org.hibernate");
+    // org.jboss.logging.Logger logger =
+    // org.jboss.logging.Logger.getLogger("org.hibernate");
     // java.util.logging.Logger.getLogger("org.hibernate").setLevel(java.util.logging.Level.SEVERE);
 
     try {
+      // Ensure we have mssql Driver in classpath
+      Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+
       // We're creating the Hibernate configuration via code. An alternative is to use
       // a 'hibernate.cfg.xml' file.
       Configuration cfg = createHibernateConfiguration();
@@ -60,7 +64,7 @@ public class HelloWorldServlet extends HttpServlet {
       // our Annotated classes.
       try (SessionFactory sessionFactory = cfg.buildSessionFactory(); Session session = sessionFactory.openSession()) {
 
-        System.out.println("Created database schema from Java classes.\n");
+        logger.info("Created database schema from Java classes.\n");
         session.beginTransaction();
 
         // Create demo: Create a User instance and save it to the database
