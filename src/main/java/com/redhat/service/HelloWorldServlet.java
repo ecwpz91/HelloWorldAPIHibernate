@@ -12,7 +12,6 @@ import org.apache.logging.log4j.LogManager;
 
 import java.sql.Connection;
 import java.sql.Statement;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -24,14 +23,14 @@ import org.hibernate.cfg.Configuration;
 public class HelloWorldServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
   final org.apache.logging.log4j.Logger logger = LogManager.getLogger(HelloWorldServlet.class);
+  
   // Create our mssql database connection
-  String host = "mssql";
-  String port = "1433";
-  String connectionUrl = "jdbc:sqlserver://" + host + ":" + port;
-  String dbname = "master";
-  String userName = "sa";
-  String password = "yourStrong@Password";
-  String sampleDatabaseName = "SampleDB";
+  private String host = "mssql";
+  private String port = "1433";
+  private String connectionUrl = "jdbc:sqlserver://" + host + ":" + port;
+  private String userName = "sa";
+  private String password = "yourStrong@Password";
+  private String sampleDatabaseName = "SampleDB";
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,9 +38,9 @@ public class HelloWorldServlet extends HttpServlet {
     logger.info("doGet fired");
     
     // Configure Hibernate logging to only log SEVERE errors
-    @SuppressWarnings("unused")
-    org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger("org.hibernate");
-    java.util.logging.Logger.getLogger("org.hibernate").setLevel(java.util.logging.Level.SEVERE);
+    // @SuppressWarnings("unused")
+    // org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger("org.hibernate");
+    // java.util.logging.Logger.getLogger("org.hibernate").setLevel(java.util.logging.Level.SEVERE);
 
     try {
       // We're creating the Hibernate configuration via code. An alternative is to use
